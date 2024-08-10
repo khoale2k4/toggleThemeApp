@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
 const ToggleTheme = () => {
-  const [theme, setTheme] = useState('light');
+  // State to store the current theme
+  const [theme, setTheme] = useState(() => {
+    // Get the saved theme from localStorage or default to 'light'
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme || 'light';
+  });
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    // Apply the theme to the document
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    // Save the theme to localStorage
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const handleToggle = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
+    // Toggle between 'light' and 'dark' themes
+    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
   return (
-    <button onClick={handleToggle} className="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+    <button
+      onClick={handleToggle}
+      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700"
+    >
       {theme === 'light' ? '🌙' : '☀️'}
     </button>
   );

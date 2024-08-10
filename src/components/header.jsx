@@ -13,6 +13,8 @@ const Header = () => {
 
   const handleNameClick = () => {
     if (user) {
+      localStorage.removeItem('authToken');
+      sessionStorage.removeItem('authToken');
       googleLogout(); 
       setUser(null); 
     }
@@ -23,7 +25,7 @@ const Header = () => {
     <header className="flex justify-between items-center p-5 bg-white dark:bg-gray-500 text-black dark:text-white">
       <div className="flex items-center">
         <div className="logo">
-          <a href="/home">
+          <a href="/">
             <img src="/images/logo.png" alt="Organic Store Logo" className="max-w-[170px]" />
           </a>
         </div>

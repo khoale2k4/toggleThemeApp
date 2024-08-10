@@ -10,6 +10,7 @@
     "autoprefixer": "^10.4.20",
     "i18next": "^23.12.2",
     "jwt-decode": "^4.0.0",
+    "next-auth": "^4.24.7",
     "next-routes": "^1.4.2",
     "postcss": "^8.4.41",
     "react": "^18.3.1",
