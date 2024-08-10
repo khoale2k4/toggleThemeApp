@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ToggleTheme from './ToggleTheme';
 import { useTranslation } from 'react-i18next';
 import ToggleLanguage from './ToggleLanguage';
+import { UserContext } from '../Context/UserContext';
+import { useNavigate } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google'; 
 
 const Header = () => {
   const { t } = useTranslation();
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleNameClick = () => {
+    if (user) {
+      googleLogout(); 
+      setUser(null); 
+    }
+    navigate('/auth/login');
+  };
+
   return (
     <header className="flex justify-between items-center p-5 bg-white dark:bg-gray-500 text-black dark:text-white">
       <div className="flex items-center">
@@ -30,7 +44,9 @@ const Header = () => {
               <a href="#" className="text-green-600 font-bold">£0.00 <span className="cart-icon">🛒</span></a>
             </div>
             <div className="account">
-              <a href="#" className="pr-5 text-gray-800 font-bold dark:text-white">Name <span className="person-icon">👤</span></a>
+              <div onClick={handleNameClick} className="pr-5 text-gray-800 font-bold dark:text-white">
+                {user ? user.name : 'Name'} <span>👤</span>
+              </div>
             </div>
             <ToggleTheme />
             <ToggleLanguage />
